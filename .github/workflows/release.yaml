@@ -1,0 +1,42 @@
+on:
+  release:
+    # Only use the types keyword to narrow down the activity types that will trigger your workflow.
+    types: [published]
+
+
+name: Release
+
+jobs:
+  releasing:  
+    name: Build Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install Dev dependencies
+        run: |
+          pip install black
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Check Output Parameters
+        run: echo "Got version ${{ steps.get_version.outputs.VERSION }}"
+      - name: Print Version
+        run: |
+          sed -i '$ d' monads/__init__.py 
+          echo "version='${{ steps.get_version.outputs.VERSION }}'" >>  monads/__init__.py   
+          sed -i '9s/.*/    version="${{ steps.get_version.outputs.VERSION }}",/' setup.py 
+          black setup.py 
+          black monads/__init__.py    
+      - uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+          
+
