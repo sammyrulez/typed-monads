@@ -27,7 +27,7 @@ I added some utility methods to make it easier to use in my day to day code and 
 There is no *pipy* release  ( yet)
 
 ```bash
-$ pip install git+https://github.com//sammyrulez/typesafe-monads#egg=typesafe-monads-2 
+$ pip install git+https://github.com//sammyrulez/typed-monads#egg=typed-monads-2 
 ```
 
 ## Curring
