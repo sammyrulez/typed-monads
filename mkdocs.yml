@@ -1,0 +1,18 @@
+site_name: Typed Monads
+nav:
+    - Home: index.md
+    - About: about.md
+    - Curring: curring.md
+    - Functor: functor.md
+theme:
+  name: material
+  palette:
+    primary: teal
+    accent: deep orange
+    icon:
+      repo: fontawesome/brands/git-alt
+      logo: fontawesome/regular/angry
+    
+
+repo_url: https://github.com//sammyrulez/typed-monads
+repo_name: sammyrulez/typed-monads
