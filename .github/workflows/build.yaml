@@ -53,7 +53,7 @@ jobs:
           python-version: "3.x"
       - name: Install Dev dependencies
         run: |
-          pip install black bumpversion
+          pip install black bumpversion mkdocs mkdocs-material
       - name: Bump version
         run: bumpversion minor setup.py monads/__init__.py
       - name: Push changes
@@ -62,6 +62,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           tags: true
+      - name: Build docs
+        run:  mkdocs build
+      - name: Deploy docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  
+        
 
 
           
