@@ -4,14 +4,27 @@ nav:
     - About: about.md
     - Curring: curring.md
     - Functor: functor.md
+    - Applicative: applicative.md
+    - Monoid: monoid.md
+    - Monads: 
+        - What's a monad?: monad.md
+        - List: list.md
+        - Maybe: maybe.md
+        - Future: future.md
+        - Result: result.md
+    - Examples:
+        - Santa Monad: aoc.md
+        - Fn Fast.api: fastapi.md  
+    - MyPy support: mypy.md
+    
 theme:
   name: material
   palette:
     primary: teal
     accent: deep orange
-    icon:
+  icon:
+      logo: fontawesome/regular/map
       repo: fontawesome/brands/git-alt
-      logo: fontawesome/regular/angry
     
 
 repo_url: https://github.com//sammyrulez/typed-monads

@@ -1,4 +1,3 @@
-## Functor
 
 In mathematics, specifically category theory, a functor is a mapping between categories. In python is an object tha can be mapped to something else.
 
