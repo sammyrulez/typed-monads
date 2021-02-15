@@ -55,7 +55,7 @@ jobs:
         run: |
           pip install black bumpversion mkdocs mkdocs-material
       - name: Bump version
-        run: bumpversion minor setup.py monads/__init__.py
+        run: bumpversion patch setup.py monads/__init__.py
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
