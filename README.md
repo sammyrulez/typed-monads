@@ -1,7 +1,7 @@
 # Type-safe Monads
 
-![Build](https://github.com/sammyrulez/typesafe-monads/workflows/Build/badge.svg)
-[![codecov](https://codecov.io/gh/sammyrulez/typesafe-monads/branch/master/graph/badge.svg)](https://codecov.io/gh/sammyrulez/typesafe-monads)
+![Build](https://github.com/sammyrulez/typed-monads/workflows/Build/badge.svg)
+[![codecov](https://codecov.io/gh/sammyrulez/typed-monads/branch/master/graph/badge.svg)](https://codecov.io/gh/sammyrulez/typed-monads)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 This is an experiment in building monads in Python supported by strict
@@ -24,11 +24,14 @@ I added some utility methods to make it easier to use in my day to day code and 
 
 ## Installation
 
-There is no *pipy* release  ( yet)
 
 ```bash
-$ pip install git+https://github.com//sammyrulez/typed-monads#egg=typed-monads-2 
+$ pip install typed-monads 
 ```
+
+## Documentation
+
+You can find [all the docs here](https://samreghenzi.it/typed-monads/)
 
 ## Curring
 

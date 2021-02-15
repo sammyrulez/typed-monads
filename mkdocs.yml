@@ -1,7 +1,6 @@
 site_name: Typed Monads
 nav:
     - Home: index.md
-    - About: about.md
     - Curring: curring.md
     - Functor: functor.md
     - Applicative: applicative.md
