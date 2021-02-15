@@ -24,11 +24,14 @@ I added some utility methods to make it easier to use in my day to day code and 
 
 ## Installation
 
-There is no *pipy* release  ( yet)
 
 ```bash
-$ pip install git+https://github.com//sammyrulez/typed-monads#egg=typed-monads-2 
+$ pip install typed-monads 
 ```
+
+## Documentation
+
+You can find [all the docs here](https://samreghenzi.it/typed-monads/)
 
 ## Curring
 
