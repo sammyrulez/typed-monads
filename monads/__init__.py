@@ -8,4 +8,4 @@ from .result import Result, Ok, Err
 from .future import Future
 from .reader import Reader
 
-version = "v0.4.0"
+version = "v0.4.1"
