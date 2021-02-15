@@ -7,7 +7,7 @@ Monads have a reputation for being difficult to understand, but in this module
 ## Installation
 
 ```bash
-$ pip install git+https://github.com//sammyrulez/typed-monads#egg=typed-monads-2 
+$ pip install typed-monads 
 ```
 
 ## Building form source
