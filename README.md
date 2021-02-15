@@ -1,6 +1,7 @@
 # Type-safe Monads
 
 ![Build](https://github.com/sammyrulez/typed-monads/workflows/Build/badge.svg)
+[![PyPI version](https://badge.fury.io/py/typed-monads.svg)](https://badge.fury.io/py/typed-monads)
 [![codecov](https://codecov.io/gh/sammyrulez/typed-monads/branch/master/graph/badge.svg)](https://codecov.io/gh/sammyrulez/typed-monads)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
