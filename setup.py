@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 
 setup(
-    name="typesafe-monads",
+    name="typed-monads",
     version="0.4.2",
     author="Correl Roush, Sam Reghenzi",
     author_email="correl@gmail.com, sammyrulez@gmail.com",
