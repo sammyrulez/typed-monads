@@ -13,7 +13,7 @@
     
     
       
-        <title>List - Typed Monads</title>
+        <title>Fn Fast.api - Typed Monads</title>
       
     
     
@@ -62,11 +62,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#flatten" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -96,7 +91,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              List
+              Fn Fast.api
             
           </span>
         </div>
@@ -279,14 +274,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
       
       
       
@@ -321,48 +314,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          List
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../list/" class="md-nav__link">
         List
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#flatten" class="md-nav__link">
-    Flatten
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -422,12 +378,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
       
       
       
@@ -448,11 +406,19 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../fastapi/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Fn Fast.api
       </a>
+      
     </li>
   
 
@@ -534,79 +500,42 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#flatten" class="md-nav__link">
-    Flatten
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/sammyrulez/typed-monads/edit/master/docs/list.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/sammyrulez/typed-monads/edit/master/docs/fastapi.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
 
-  <h1>List</h1>
+  <h1>Fn Fast.api</h1>
 
-<p>Represents a ordered sequence of items.</p>
-<ul>
-<li>Also implements <code>Monoid</code>.</li>
-</ul>
-<pre><code class="language-python">
-m_list: List[int] = List([1, 2, 4, 9])
-for i in m_list:
+<p>FastAPI is a modern, fast (high-performance), web framework for building APIs with Python.</p>
+<p>You can use a monadic structure to wrap the response of your endpoint</p>
+<pre><code class="language-python">from monads.fastapi import MonadicHttpError
+
+def check_not_found(x: Dict[str, Any]) -&gt; Maybe[MonadicHttpError]:
+    if &quot;err&quot; in x and &quot;not found&quot; in x[&quot;err&quot;]:
+        return Just(MonadicHttpError(404, x[&quot;err&quot;]))
+    else:
+        return Nothing()
+
+
+MonadicResponseMiddleware.add_monadic_response_middleware(app, [check_not_found])
+
+def read_from_source(item_id) -&gt; Result[Item,str] # return an item or an error with a localized message
     ...
 
-#Or filter with a generator
 
-evens: List[int] = [k for k in m_list if k % 2 == 0 ]
-
-# And use it like a monad
-
-doubles: List[int] = m_list.map(lambda i : i * 2) 
-
-# Mixing and matching oop and fn
-
-m_list.fold(lambda k, h: k + h, 0) == 16
+@app.get(&quot;/items/{item_id}&quot;)
+async def read_item(item_id: str) -&gt; Result[Item, str]:
+    return read_from_source(item_id).map(lambda item: item.sku = '#REDACTED#') # the transformation occurs only if there were no errors
 
 </code></pre>
-<h4 id="flatten">Flatten</h4>
-<p>If you have a list of lists, and want to create one list (sequence) from them, use the flatten method to convert a list of lists into a single list</p>
-<pre><code class="language-python">
-m_list: List[Union[int, List[int]]] = List([1, 2, List([3, 4])])
-len(m_list.flatten()) == 4
-
-</code></pre>
+<p><em>FastAPI support is under heavy development</em> details may change in the future.</p>
 
               
             </article>
@@ -620,7 +549,7 @@ len(m_list.flatten()) == 4
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../monad/" class="md-footer__link md-footer__link--prev" aria-label="Previous: What&#39;s a monad?" rel="prev">
+        <a href="../result/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Result" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -629,20 +558,20 @@ len(m_list.flatten()) == 4
               <span class="md-footer__direction">
                 Previous
               </span>
-              What's a monad?
+              Result
             </div>
           </div>
         </a>
       
       
         
-        <a href="../maybe/" class="md-footer__link md-footer__link--next" aria-label="Next: Maybe" rel="next">
+        <a href="../mypy/" class="md-footer__link md-footer__link--next" aria-label="Next: MyPy support" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Maybe
+              MyPy support
             </div>
           </div>
           <div class="md-footer__button md-icon">
