@@ -11,9 +11,11 @@ nav:
         - Maybe: maybe.md
         - Future: future.md
         - Result: result.md
+    - Frameworks:
+        - Fn Fast.api: fastapi.md  
     - Examples:
         - Santa Monad: aoc.md
-        - Fn Fast.api: fastapi.md  
+
     - MyPy support: mypy.md
     
 theme:

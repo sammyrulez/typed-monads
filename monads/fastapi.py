@@ -1,4 +1,4 @@
-from attr import dataclass
+from dataclasses import dataclass
 from fastapi import FastAPI, Request
 import json
 from typing import Any, Callable, List, Union
@@ -45,7 +45,9 @@ class MonadicResponseMiddleware:
     def check_for_error(self, x: Any) -> Maybe[MonadicHttpError]:
         return (
             self.error_decoder.map(lambda f: f(x))
-            .filter(lambda m: m.toOptional() != None) # ugly but type consistent TODO: Maybe is present?
+            .filter(
+                lambda m: m.toOptional() != None
+            )  # ugly but type consistent TODO: Maybe is present?
             .head()
             .flatten()
         )
