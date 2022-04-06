@@ -13,6 +13,8 @@ from typing import (
     cast,
 )
 
+from monads.maybe import Just, Maybe, Nothing
+
 from .monad import Monad
 from .monoid import Monoidal
 from .currying import CurriedBinary, uncurry
@@ -76,6 +78,15 @@ class List(Monad[T], Monoidal[list]):
         else:
             functor = func
         return reduce(functor, self._value, base_val)  # type: ignore
+
+    def filter(self, predicate: Callable[[T], bool]) -> List[T]:
+        return List(list(filter(predicate, self._value)))
+
+    def head(self) -> Maybe[T]:
+        if self._value:
+            return Just(self._value[0])
+        else:
+            return Nothing()
 
     __and__ = lambda other, self: List.apply(self, other)  # type: ignore
 

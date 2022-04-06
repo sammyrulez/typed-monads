@@ -9,9 +9,8 @@ from .future import Future
 from .reader import Reader
 
 try:
-    from .fn_databases import Query
+    from .fastapi import MonadicResponseMiddleware
 except ImportError:
     pass
-
 
 version = "v0.4.3"
