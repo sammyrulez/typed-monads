@@ -8,4 +8,10 @@ from .result import Result, Ok, Err
 from .future import Future
 from .reader import Reader
 
+try:
+    from .fn_databases import Query
+except ImportError:
+    pass
+
+
 version = "v0.4.3"
