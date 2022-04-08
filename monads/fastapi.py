@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from fastapi import FastAPI, Request
 import json
-from typing import Any, Callable, List, Union
+from typing import Any, Callable, List, Union, Optional
 from monads import Maybe, List as HList
 from starlette.middleware.base import BaseHTTPMiddleware
 
@@ -27,7 +27,7 @@ class HttpError:
     text: str
 
 
-ErrorDecoder = List[Callable[[Any], Maybe[HList[HttpError]]]]
+ErrorDecoder = List[Callable[[Any], Maybe[HttpError]]]
 
 
 class MonadicResponseMiddleware:
@@ -38,18 +38,14 @@ class MonadicResponseMiddleware:
         )
 
     def __init__(self, error_decoder: ErrorDecoder):
-        self.error_decoder: HList[Callable[[Any], Maybe[HList[HttpError]]]] = HList(
+        self.error_decoder: HList[Callable[[Any], Maybe[HttpError]]] = HList(
             error_decoder
         )
 
-    def check_for_error(self, x: Any) -> Maybe[HList[HttpError]]:
-        return (
-            self.error_decoder.map(lambda f: f(x))
-            .filter(
-                lambda m: m.toOptional() != None
-            )  
-            .flatten()
-        )
+    def check_for_error(self, x: Any) -> HList[HttpError]:
+        a = self.error_decoder.map(lambda f: f(x))
+        a = a.filter(lambda e: e.toOptional() != None).map(lambda e: e.toOptional()).flatten()  # type: ignore
+        return a  # type: ignore
 
     async def __call__(self, request: Request, call_next):
         response = await call_next(request)
@@ -63,16 +59,20 @@ class MonadicResponseMiddleware:
                     resp_body_obj = resp_body_obj["value"]
                     resp_body = json.dumps(resp_body_obj)
                 elif "err" in resp_body_obj:
-                    def check_status_code(h,k):
-                        if k.status_code > h : 
-                            h = k.status_code 
+
+                    def check_status_code(h, k):
+                        if k.status_code > h:
+                            h = k.status_code
                         return h
-    
 
                     checked_errors = self.check_for_error(resp_body_obj)
                     decoded_errors = checked_errors.map(lambda e: e.text)
-                    response.status_code= checked_errors.fold( check_status_code, 400)
-                    resp_body =  decoded_errors.or_else(json.dumps(resp_body_obj)).get()
+                    response.status_code = checked_errors.fold(check_status_code, 400)
+                    resp_body = (
+                        decoded_errors.value
+                        if decoded_errors
+                        else json.dumps(resp_body_obj)
+                    )
         except:
             resp_body = str(resp_body)
 
