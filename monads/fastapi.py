@@ -71,7 +71,7 @@ class MonadicResponseMiddleware:
 
                     checked_errors = self.check_for_error(resp_body_obj)
                     decoded_errors = checked_errors.map(lambda e: e.text)
-                    response.status_code= HList(checked_errors).fold( check_status_code, 400)
+                    response.status_code= checked_errors.fold( check_status_code, 400)
                     resp_body =  decoded_errors.or_else(json.dumps(resp_body_obj)).get()
         except:
             resp_body = str(resp_body)
