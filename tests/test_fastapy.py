@@ -1,18 +1,17 @@
 from dataclasses import dataclass
 from typing import Any, Dict
-from monads import MonadicResponseMiddleware
+from monads import MonadicResponseMiddleware, HttpError
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from monads.fastapi import MonadicHttpError
 from monads.maybe import Just, Maybe, Nothing
 from monads.result import Err, Ok, Result
 
 app = FastAPI()
 
 
-def check_not_found(x: Dict[str, Any]) -> Maybe[MonadicHttpError]:
+def check_not_found(x: Dict[str, Any]) -> Maybe[HttpError]:
     if "err" in x and "not found" in x["err"]:
-        return Just(MonadicHttpError(404, x["err"]))
+        return Just(HttpError(404, x["err"]))
     else:
         return Nothing()
 

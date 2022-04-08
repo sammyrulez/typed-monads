@@ -9,7 +9,7 @@ from .future import Future
 from .reader import Reader
 
 try:
-    from .fastapi import MonadicResponseMiddleware
+    from .fastapi import MonadicResponseMiddleware, HttpError
 except ImportError:
     pass
 
