@@ -9,8 +9,8 @@ from .future import Future
 from .reader import Reader
 
 try:
-    from .fastapi import MonadicResponseMiddleware
+    from .fastapi import MonadicResponseMiddleware, HttpError
 except ImportError:
     pass
 
-version = "v0.4.5"
+version = "v0.4.3"

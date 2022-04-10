@@ -1,18 +1,19 @@
 from dataclasses import dataclass
-from typing import Any, Dict
-from monads import MonadicResponseMiddleware
+from typing import Any, Dict, List
+from monads import MonadicResponseMiddleware, HttpError
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from monads.fastapi import MonadicHttpError
 from monads.maybe import Just, Maybe, Nothing
 from monads.result import Err, Ok, Result
 
 app = FastAPI()
 
 
-def check_not_found(x: Dict[str, Any]) -> Maybe[MonadicHttpError]:
+def check_not_found(x: Dict[str, Any]) -> Maybe[HttpError]:
     if "err" in x and "not found" in x["err"]:
-        return Just(MonadicHttpError(404, x["err"]))
+        return Just(HttpError(404, x["err"]))
+    elif "Failure" in x["err"]:
+        return Just(HttpError(500, x["err"]))
     else:
         return Nothing()
 
@@ -25,10 +26,28 @@ class Item:
     item_id: str
 
 
+@dataclass
+class Person:
+    err: str
+    value: int
+
+
+@app.get("/people/")
+async def people() -> List[Person]:
+    return [Person("Sam", 10)]
+
+
+@app.get("/people/{item_id}")
+async def person_detail(item_id: str) -> Person:
+    return Person("Sam", 10)
+
+
 @app.get("/items/{item_id}")
 async def read_item(item_id: str) -> Result[Item, str]:
     if item_id == "xyz":
         return Ok(Item(item_id))
+    elif item_id == "gold":
+        return Err("Failure")
     else:
         return Err(f"Item {item_id} not found")
 
@@ -42,3 +61,13 @@ def test_monadic_response():
     assert response.json() == {"item_id": "xyz"}
     response = client.get("/items/kkk")
     assert response.status_code == 404
+    response = client.get("/items/gold")
+    assert response.status_code == 500
+
+
+def test_regular_resposne():
+    response = client.get("/people/")
+
+    assert response.status_code == 200
+    response = client.get("/people/xyz")
+    assert response.status_code == 200
