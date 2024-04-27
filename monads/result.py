@@ -96,6 +96,8 @@ class Result(Monad[T], Generic[T, E]):
 
 
 class Ok(Result[T, E]):
+    __match_args__ = ('value',)
+
     def __init__(self, value: T) -> None:
         self.value = value
 
@@ -107,6 +109,8 @@ class Ok(Result[T, E]):
 
 
 class Err(Result[T, E]):
+    __match_args__ = ('err',)
+    
     def __init__(self, err: E) -> None:
         self.err = err
 
