@@ -63,4 +63,4 @@ def test_immutability(constructor: Constructor) -> None:
     with pytest.raises(AttributeError) as excinfo:
         # this is ignore on porpouse othewise the mypy test fail. Uncomment to check the Final check with mypy
         a.value = 2  # type: ignore
-    assert "can't set attribute" in str(excinfo.value)
+        assert "can't set attribute" in str(excinfo.value)

@@ -21,18 +21,15 @@ class Curried(Reader[A, Result]):
         return f"<Curried {module}.{name}{signature}>"
 
 
-class CurriedUnary(Curried[A, Result]):
-    ...
+class CurriedUnary(Curried[A, Result]): ...
 
 
 class CurriedBinary(Curried[A, CurriedUnary[B, Result]]):
     @overload
-    def __call__(self, environment: A) -> CurriedUnary[B, Result]:
-        ...
+    def __call__(self, environment: A) -> CurriedUnary[B, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B) -> Result:
-        ...
+    def __call__(self, environment: A, b: B) -> Result: ...
 
     def __call__(self, *args):
         return reduce(lambda f, x: f(x), args, self.function)
@@ -40,16 +37,13 @@ class CurriedBinary(Curried[A, CurriedUnary[B, Result]]):
 
 class CurriedTernary(Curried[A, CurriedBinary[B, C, Result]]):
     @overload
-    def __call__(self, environment: A) -> CurriedBinary[B, C, Result]:
-        ...
+    def __call__(self, environment: A) -> CurriedBinary[B, C, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B) -> CurriedUnary[C, Result]:
-        ...
+    def __call__(self, environment: A, b: B) -> CurriedUnary[C, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B, c: C) -> Result:
-        ...
+    def __call__(self, environment: A, b: B, c: C) -> Result: ...
 
     def __call__(self, *args):
         return reduce(lambda f, x: f(x), args, self.function)
@@ -57,20 +51,16 @@ class CurriedTernary(Curried[A, CurriedBinary[B, C, Result]]):
 
 class CurriedQuaternary(Curried[A, CurriedTernary[B, C, D, Result]]):
     @overload
-    def __call__(self, environment: A) -> CurriedTernary[B, C, D, Result]:
-        ...
+    def __call__(self, environment: A) -> CurriedTernary[B, C, D, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B) -> CurriedBinary[C, D, Result]:
-        ...
+    def __call__(self, environment: A, b: B) -> CurriedBinary[C, D, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B, c: C) -> CurriedUnary[D, Result]:
-        ...
+    def __call__(self, environment: A, b: B, c: C) -> CurriedUnary[D, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B, c: C, d: D) -> Result:
-        ...
+    def __call__(self, environment: A, b: B, c: C, d: D) -> Result: ...
 
     def __call__(self, *args):
         return reduce(lambda f, x: f(x), args, self.function)
@@ -78,54 +68,46 @@ class CurriedQuaternary(Curried[A, CurriedTernary[B, C, D, Result]]):
 
 class CurriedQuinary(Curried[A, CurriedQuaternary[B, C, D, E, Result]]):
     @overload
-    def __call__(self, environment: A) -> CurriedQuaternary[B, C, D, E, Result]:
-        ...
+    def __call__(self, environment: A) -> CurriedQuaternary[B, C, D, E, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B) -> CurriedTernary[C, D, E, Result]:
-        ...
+    def __call__(self, environment: A, b: B) -> CurriedTernary[C, D, E, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B, c: C) -> CurriedBinary[D, E, Result]:
-        ...
+    def __call__(self, environment: A, b: B, c: C) -> CurriedBinary[D, E, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B, c: C, d: D) -> CurriedUnary[E, Result]:
-        ...
+    def __call__(self, environment: A, b: B, c: C, d: D) -> CurriedUnary[E, Result]: ...
 
     @overload
-    def __call__(self, environment: A, b: B, c: C, d: D, e: E) -> Result:
-        ...
+    def __call__(self, environment: A, b: B, c: C, d: D, e: E) -> Result: ...
 
     def __call__(self, *args):
         return reduce(lambda f, x: f(x), args, self.function)
 
 
 @overload
-def curry(f: Callable[[A], Result]) -> CurriedUnary[A, Result]:
-    ...
+def curry(f: Callable[[A], Result]) -> CurriedUnary[A, Result]: ...
 
 
 @overload
-def curry(f: Callable[[A, B], Result]) -> CurriedBinary[A, B, Result]:
-    ...
+def curry(f: Callable[[A, B], Result]) -> CurriedBinary[A, B, Result]: ...
 
 
 @overload
-def curry(f: Callable[[A, B, C], Result]) -> CurriedTernary[A, B, C, Result]:
-    ...
+def curry(f: Callable[[A, B, C], Result]) -> CurriedTernary[A, B, C, Result]: ...
 
 
 @overload
-def curry(f: Callable[[A, B, C, D], Result]) -> CurriedQuaternary[A, B, C, D, Result]:
-    ...
+def curry(
+    f: Callable[[A, B, C, D], Result]
+) -> CurriedQuaternary[A, B, C, D, Result]: ...
 
 
 @overload
 def curry(
     f: Callable[[A, B, C, D, E], Result]
-) -> CurriedQuinary[A, B, C, D, E, Result]:
-    ...
+) -> CurriedQuinary[A, B, C, D, E, Result]: ...
 
 
 def curry(f):
@@ -161,30 +143,27 @@ def curry(f):
 
 
 @overload
-def uncurry(f: CurriedUnary[A, Result]) -> Callable[[A], Result]:
-    ...
+def uncurry(f: CurriedUnary[A, Result]) -> Callable[[A], Result]: ...
 
 
 @overload
-def uncurry(f: CurriedBinary[A, B, Result]) -> Callable[[A, B], Result]:
-    ...
+def uncurry(f: CurriedBinary[A, B, Result]) -> Callable[[A, B], Result]: ...
 
 
 @overload
-def uncurry(f: CurriedTernary[A, B, C, Result]) -> Callable[[A, B, C], Result]:
-    ...
+def uncurry(f: CurriedTernary[A, B, C, Result]) -> Callable[[A, B, C], Result]: ...
 
 
 @overload
-def uncurry(f: CurriedQuaternary[A, B, C, D, Result]) -> Callable[[A, B, C, D], Result]:
-    ...
+def uncurry(
+    f: CurriedQuaternary[A, B, C, D, Result]
+) -> Callable[[A, B, C, D], Result]: ...
 
 
 @overload
 def uncurry(
     f: CurriedQuinary[A, B, C, D, E, Result]
-) -> Callable[[A, B, C, D, E], Result]:
-    ...
+) -> Callable[[A, B, C, D, E], Result]: ...
 
 
 def uncurry(f):
