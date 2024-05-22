@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List
+
+from pydantic import BaseModel
 from monads import MonadicResponseMiddleware, HttpError
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -42,15 +44,26 @@ async def person_detail(item_id: str) -> Person:
     return Person("Sam", 10)
 
 
+class ResultResponse(BaseModel):
+    def __init__(self, result: Result[Any, Any]):
+        self.result = result
+
+    def __call__(self):
+        if self.result.is_ok():
+            return self.result.value
+        else:
+            raise HttpError(500, self.result.error)
+
+
 # TODO: Fix this: not more compatible with modern fastapi
-"""@app.get("/items/{item_id}")
-async def read_item(item_id: str) -> Result[Item, str]:
+@app.get("/items/{item_id}")
+async def read_item(item_id: str) -> ResultResponse:
     if item_id == "xyz":
-        return Ok(Item(item_id))
+        return ResultResponse(Ok(Item(item_id)))
     elif item_id == "gold":
-        return Err("Failure")
+        return ResultResponse(Err("Failure"))
     else:
-        return Err(f"Item {item_id} not found")"""
+        return ResultResponse(Err(f"Item {item_id} not found"))
 
 
 client = TestClient(app)
