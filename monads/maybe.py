@@ -111,7 +111,7 @@ class Maybe(Monad[T], Iterable, Sized):
 
 
 class Just(Maybe[T]):
-    __match_args__ = ('value',)
+    __match_args__ = ("value",)
 
     def __init__(self, value: T) -> None:
         self.value = value
