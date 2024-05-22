@@ -76,7 +76,7 @@ class Maybe(Monad[T], Iterable, Sized):
 
     @classmethod
     def fromResult(cls, m: result.Result[T, E]) -> Maybe[T]:
-        return m.map(Maybe.pure).withDefault(Nothing())
+        return m.map(Maybe[T].pure).withDefault(Nothing())
 
     def toResult(self, error: E) -> result.Result[T, E]:
         if isinstance(self, Just):
@@ -141,8 +141,7 @@ class Just(Maybe[T]):
 
 
 class Nothing(Maybe[T]):
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def __eq__(self, other: object):
         return isinstance(other, Nothing)
