@@ -55,7 +55,7 @@ jobs:
           python-version: "3.x"
       - name: Install Dev dependencies
         run: |
-          pip install black bumpversion mkdocs mkdocs-material wheel 
+          pip install setuptools black bumpversion mkdocs mkdocs-material wheel 
       - name: Bump version
         run: bumpversion patch setup.py monads/__init__.py
       - name: Build docs
